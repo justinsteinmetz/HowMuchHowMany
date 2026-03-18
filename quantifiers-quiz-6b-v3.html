@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quantifiers Quiz — Class 6b</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #1a1a2e;
+  --card: #16213e;
+  --card2: #0f3460;
+  --ink: #eaeaea;
+  --muted: #8892b0;
+  --accent: #e94560;
+  --green: #00d084;
+  --red: #ff4757;
+  --yellow: #ffd32a;
+  --purple: #9c59d1;
+  --teal: #00d2d3;
+  --orange: #ff9f43;
+  --radius: 20px;
+  --shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 14px 60px;
+  overflow-x: hidden;
+  background-image:
+    radial-gradient(ellipse at 15% 0%, rgba(233,69,96,0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 100%, rgba(0,210,211,0.1) 0%, transparent 50%);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+  animation: drop-in 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+
+@keyframes drop-in {
+  from { opacity: 0; transform: translateY(-30px) scale(0.9); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+h1 {
+  font-family: 'Fredoka One', sans-serif;
+  font-size: clamp(2rem, 7vw, 3rem);
+  color: #fff;
+  letter-spacing: 1px;
+  line-height: 1;
+  margin-bottom: 4px;
+  text-shadow: 0 0 30px rgba(233,69,96,0.5);
+}
+h1 .pop { color: var(--accent); }
+
+.subtitle {
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* ── COLLAPSIBLE REFERENCE ── */
+.ref-wrap { width: 100%; max-width: 700px; margin-bottom: 18px; }
+
+.ref-toggle {
+  width: 100%;
+  background: var(--card2);
+  border: 2px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 12px 18px;
+  color: var(--ink);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background 0.2s, border-color 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.ref-toggle:hover { background: #1a3a6e; border-color: rgba(255,255,255,0.15); }
+.ref-toggle .arrow { transition: transform 0.3s; font-size: 0.8rem; }
+.ref-toggle.open .arrow { transform: rotate(180deg); }
+
+.ref-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+.ref-body.open { max-height: 640px; }
+
+.rule-table-wrap {
+  background: var(--card);
+  border: 2px solid rgba(255,255,255,0.06);
+  border-top: none;
+  border-radius: 0 0 14px 14px;
+  overflow: hidden;
+}
+.rule-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+.rule-table th {
+  font-weight: 800; text-align: left; padding: 8px 12px;
+  background: rgba(255,255,255,0.05); color: var(--muted);
+  font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase;
+}
+.rule-table td { padding: 8px 12px; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--ink); vertical-align: middle; }
+.rule-table tr:last-child td { border-bottom: none; }
+.tag-c { background: rgba(52,152,219,0.25); color: #74b9ff; border-radius: 99px; padding: 2px 8px; font-size: 0.72rem; font-weight: 700; }
+.tag-u { background: rgba(233,69,96,0.2); color: #fd79a8; border-radius: 99px; padding: 2px 8px; font-size: 0.72rem; font-weight: 700; }
+.tag-b { background: rgba(0,208,132,0.2); color: #55efc4; border-radius: 99px; padding: 2px 8px; font-size: 0.72rem; font-weight: 700; }
+
+/* ── STATS BAR ── */
+.stats-bar { width: 100%; max-width: 700px; display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.progress-bar { flex: 1; height: 8px; background: rgba(255,255,255,0.1); border-radius: 99px; overflow: hidden; }
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), #ff6b35);
+  border-radius: 99px;
+  transition: width 0.5s cubic-bezier(0.34,1.56,0.64,1), background 0.8s ease;
+}
+.progress-label { font-weight: 800; font-size: 0.82rem; color: var(--muted); white-space: nowrap; }
+
+.score-pill { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+.pill {
+  background: var(--card2); border: 2px solid rgba(255,255,255,0.08);
+  border-radius: 99px; padding: 6px 16px; font-weight: 800; font-size: 0.85rem; color: var(--ink);
+}
+.pill .val { color: var(--yellow); font-family: 'Fredoka One', sans-serif; font-size: 1.05rem; }
+.pill .val-muted { color: var(--muted); font-family: 'Fredoka One', sans-serif; font-size: 0.9rem; }
+.streak-pill .val { color: var(--orange); }
+
+/* ── AUTO-ADVANCE NEXT BTN ── */
+.next-btn {
+  display: none; font-family: 'Fredoka One', sans-serif; font-size: 1.1rem;
+  letter-spacing: 0.5px; background: linear-gradient(135deg, var(--accent), #c0392b);
+  color: #fff; border: none; border-radius: 14px; padding: 15px 40px;
+  cursor: pointer; margin-top: 16px; transition: transform 0.12s, box-shadow 0.15s;
+  box-shadow: 0 4px 20px rgba(233,69,96,0.4); -webkit-tap-highlight-color: transparent;
+  position: relative; overflow: hidden;
+}
+.next-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(233,69,96,0.5); }
+.next-btn.show { display: block; animation: pop-in 0.3s cubic-bezier(0.34,1.56,0.64,1) both; }
+.next-btn .pip-track {
+  position: absolute; bottom: 0; left: 0; height: 3px;
+  background: rgba(255,255,255,0.5); border-radius: 0 0 14px 14px;
+  width: 0%;
+}
+.next-btn.auto-counting .pip-track {
+  animation: pip-fill 1.9s linear forwards;
+}
+@keyframes pip-fill {
+  from { width: 0%; }
+  to   { width: 100%; }
+}
+@keyframes pop-in {
+  from { opacity: 0; transform: scale(0.7); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ── BREAKDOWN GROUPED ── */
+.breakdown { width: 100%; margin-top: 28px; text-align: left; }
+.breakdown-title {
+  font-weight: 800; font-size: 0.75rem; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 12px;
+}
+.bd-group {
+  margin-bottom: 18px;
+}
+.bd-group-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 6px 10px; border-radius: 8px; margin-bottom: 6px;
+  font-weight: 800; font-size: 0.75rem; letter-spacing: 0.5px;
+}
+.bd-group-miss {
+  font-size: 0.72rem; font-weight: 700; opacity: 0.9;
+}
+.breakdown-item {
+  display: grid; grid-template-columns: 1fr auto;
+  align-items: start; gap: 8px; padding: 8px 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 0.84rem;
+  border-radius: 6px;
+}
+.breakdown-item:last-child { border-bottom: none; }
+.bd-sentence { color: var(--ink); line-height: 1.5; font-weight: 600; }
+.bd-sentence strong { color: var(--green); }
+.bd-wrong-note { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+.bd-wrong-word { color: var(--red); text-decoration: line-through; }
+.bd-icon { font-size: 1rem; padding-top: 2px; }
+.card {
+  background: var(--card); border: 2px solid rgba(255,255,255,0.07);
+  border-radius: var(--radius); box-shadow: var(--shadow);
+  padding: 28px 24px 24px; width: 100%; max-width: 700px;
+  margin-bottom: 16px; position: relative; overflow: hidden;
+  animation: card-in 0.35s cubic-bezier(0.34,1.4,0.64,1) both;
+}
+@keyframes card-in {
+  from { opacity: 0; transform: translateY(20px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.card-glow {
+  position: absolute; top: -40px; right: -40px;
+  width: 150px; height: 150px; border-radius: 50%;
+  filter: blur(50px); opacity: 0.25; pointer-events: none; transition: background 0.3s;
+}
+
+.q-badge {
+  display: inline-block; font-weight: 800; font-size: 0.68rem;
+  text-transform: uppercase; letter-spacing: 1.5px; border-radius: 99px;
+  padding: 3px 12px; margin-bottom: 16px; border: 1.5px solid currentColor; opacity: 0.9;
+}
+
+.emoji-scene {
+  font-size: clamp(1.8rem, 5vw, 2.4rem); margin-bottom: 10px;
+  animation: wiggle 1s ease 0.2s both;
+}
+@keyframes wiggle {
+  0%,100% { transform: rotate(0deg); }
+  25% { transform: rotate(-8deg); }
+  75% { transform: rotate(8deg); }
+}
+
+.sentence-display {
+  font-family: 'Nunito', sans-serif; font-weight: 800;
+  font-size: clamp(1.05rem, 3.2vw, 1.35rem); color: #fff;
+  line-height: 1.55; margin-bottom: 6px;
+}
+.blank {
+  display: inline-block; min-width: 90px;
+  border-bottom: 3px solid var(--accent); color: var(--accent);
+  padding: 0 6px; text-align: center;
+}
+
+.hint { font-size: 0.82rem; color: var(--muted); margin-bottom: 22px; font-style: italic; min-height: 1.2em; }
+
+/* ── OPTIONS ── */
+.options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+.opt-btn {
+  font-family: 'Nunito', sans-serif; font-weight: 800;
+  font-size: clamp(0.92rem, 2.5vw, 1.05rem); padding: 15px 10px;
+  border: 2.5px solid rgba(255,255,255,0.1); border-radius: 14px;
+  cursor: pointer; background: rgba(255,255,255,0.05); color: var(--ink);
+  transition: transform 0.12s ease, background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  -webkit-tap-highlight-color: transparent; text-align: center;
+  position: relative; overflow: hidden;
+}
+.opt-btn::after {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.15), transparent 70%);
+  opacity: 0; transition: opacity 0.2s;
+}
+.opt-btn:hover:not(:disabled) {
+  transform: translateY(-3px); border-color: rgba(255,255,255,0.25);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3); background: rgba(255,255,255,0.1);
+}
+.opt-btn:hover:not(:disabled)::after { opacity: 1; }
+.opt-btn:active:not(:disabled) { transform: scale(0.96); }
+
+.opt-btn.correct {
+  background: rgba(0,208,132,0.2); border-color: var(--green); color: var(--green);
+  animation: bounce-correct 0.5s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes bounce-correct {
+  0% { transform: scale(1); } 50% { transform: scale(1.08); } 100% { transform: scale(1); }
+}
+.opt-btn.wrong {
+  background: rgba(255,71,87,0.2); border-color: var(--red); color: var(--red);
+  animation: shake 0.4s ease;
+}
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); } 40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); } 80% { transform: translateX(4px); }
+}
+.opt-btn.reveal-correct { background: rgba(0,208,132,0.2); border-color: var(--green); color: var(--green); }
+
+/* ── FEEDBACK ── */
+.feedback {
+  margin-top: 18px; border-radius: 12px; padding: 14px 16px;
+  font-weight: 700; font-size: 0.92rem; display: none;
+  align-items: flex-start; gap: 10px; border: 1.5px solid transparent;
+}
+.feedback.show { display: flex; }
+.feedback.correct-fb { background: rgba(0,208,132,0.12); border-color: rgba(0,208,132,0.3); color: #55efc4; }
+.feedback.wrong-fb   { background: rgba(255,71,87,0.12);  border-color: rgba(255,71,87,0.3);  color: #ff6b81; }
+.feedback-icon { font-size: 1.3rem; flex-shrink: 0; }
+.feedback-rule { font-size: 0.8rem; margin-top: 4px; opacity: 0.8; font-weight: 600; }
+
+/* ── CONFETTI ── */
+#confetti-canvas {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 999;
+}
+
+#quiz-screen { width: 100%; display: flex; flex-direction: column; align-items: center; }
+
+/* ── STREAK BANNER ── */
+.streak-banner {
+  position: fixed; top: 50%; left: 50%;
+  transform: translate(-50%, -50%) scale(0); z-index: 998;
+  background: linear-gradient(135deg, var(--orange), #e55039);
+  color: #fff; font-family: 'Fredoka One', sans-serif;
+  font-size: clamp(1.4rem, 5vw, 2rem); border-radius: 20px;
+  padding: 18px 36px; text-align: center; pointer-events: none;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s;
+  opacity: 0; white-space: nowrap;
+}
+.streak-banner.show { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+
+/* ── RESULTS ── */
+#results-screen {
+  display: none; flex-direction: column; align-items: center;
+  width: 100%; max-width: 700px; text-align: center;
+  animation: card-in 0.5s cubic-bezier(0.34,1.4,0.64,1) both;
+}
+.result-card {
+  background: var(--card); border: 2px solid rgba(255,255,255,0.07);
+  border-radius: var(--radius); box-shadow: var(--shadow);
+  padding: 40px 28px 32px; width: 100%; position: relative; overflow: hidden;
+}
+.result-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, var(--accent), var(--orange), var(--teal));
+}
+.result-emoji { font-size: 4rem; margin-bottom: 10px; display: block; animation: wiggle 1s ease; }
+.big-score {
+  font-family: 'Fredoka One', sans-serif; font-size: clamp(3.5rem, 14vw, 5.5rem);
+  color: #fff; line-height: 1; margin-bottom: 6px;
+}
+.big-score span { color: var(--accent); }
+.result-msg { font-family: 'Fredoka One', sans-serif; font-size: 1.5rem; color: #fff; margin-bottom: 6px; }
+.result-sub { font-size: 0.88rem; color: var(--muted); margin-bottom: 28px; }
+
+.restart-btn {
+  font-family: 'Fredoka One', sans-serif; font-size: 1.15rem;
+  background: linear-gradient(135deg, var(--accent), #c0392b);
+  color: #fff; border: none; border-radius: 14px; padding: 16px 44px;
+  cursor: pointer; transition: transform 0.12s, box-shadow 0.15s;
+  box-shadow: 0 4px 20px rgba(233,69,96,0.4); letter-spacing: 0.5px;
+}
+.restart-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(233,69,96,0.5); }
+
+</style>
+</head>
+<body>
+
+<canvas id="confetti-canvas"></canvas>
+<div class="streak-banner" id="streak-banner"></div>
+
+<div class="header">
+  <h1>HOW MUCH?<br><span class="pop">HOW MANY?</span></h1>
+  <p class="subtitle">Class 6b &nbsp;·&nbsp; Quantifiers Quiz</p>
+</div>
+
+<!-- COLLAPSIBLE REFERENCE -->
+<div class="ref-wrap">
+  <button class="ref-toggle" id="ref-toggle" onclick="toggleRef()">
+    <span>📖 Quick Reference — tap to open</span>
+    <span class="arrow">▼</span>
+  </button>
+  <div class="ref-body" id="ref-body">
+    <div class="rule-table-wrap">
+      <table class="rule-table">
+        <tr><th>Quantifier</th><th>Use with</th><th>Example</th></tr>
+        <tr><td><strong>some / any</strong></td><td><span class="tag-c">countable</span> <span class="tag-u">uncountable</span></td><td>some apples / any water</td></tr>
+        <tr><td><strong>much</strong></td><td><span class="tag-u">uncountable</span></td><td>much time, much money</td></tr>
+        <tr><td><strong>many</strong></td><td><span class="tag-c">countable</span></td><td>many books, many friends</td></tr>
+        <tr><td><strong>a lot of / lots of</strong></td><td><span class="tag-b">both</span></td><td>a lot of rice, a lot of chairs</td></tr>
+        <tr><td><strong>a few</strong></td><td><span class="tag-c">countable</span></td><td>a few minutes, a few cats</td></tr>
+        <tr><td><strong>a little</strong></td><td><span class="tag-u">uncountable</span></td><td>a little sugar, a little luck</td></tr>
+        <tr><td><strong>too many</strong></td><td><span class="tag-c">countable</span></td><td>too many people, too many bags</td></tr>
+        <tr><td><strong>too much</strong></td><td><span class="tag-u">uncountable</span></td><td>too much noise, too much salt</td></tr>
+        <tr><td><strong>enough</strong></td><td><span class="tag-b">both</span></td><td>enough chairs, enough space</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- QUIZ SCREEN -->
+<div id="quiz-screen">
+  <div class="stats-bar">
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    <div class="progress-label" id="progress-label">1 / 24</div>
+  </div>
+  <div class="score-pill">
+    <div class="pill">⭐ <span class="val" id="score-display">0</span><span class="val-muted" id="score-total">/24</span></div>
+    <div class="pill streak-pill">🔥 Streak: <span class="val" id="streak-display">0</span></div>
+  </div>
+  <div class="card" id="question-card">
+    <div class="card-glow" id="card-glow"></div>
+    <div class="q-badge" id="q-badge"></div>
+    <div class="emoji-scene" id="emoji-scene"></div>
+    <div class="sentence-display" id="sentence-display"></div>
+    <div class="hint" id="hint-display"></div>
+    <div class="options" id="options-container"></div>
+    <div class="feedback" id="feedback">
+      <div class="feedback-icon" id="feedback-icon"></div>
+      <div>
+        <div id="feedback-main"></div>
+        <div class="feedback-rule" id="feedback-rule"></div>
+      </div>
+    </div>
+    <button class="next-btn" id="next-btn" onclick="nextQuestion()">Next → <span class="pip-track" id="pip-track"></span></button>
+  </div>
+</div>
+
+<!-- RESULTS SCREEN -->
+<div id="results-screen">
+  <div class="result-card">
+    <span class="result-emoji" id="result-emoji"></span>
+    <div class="big-score" id="big-score">0<span>/24</span></div>
+    <div class="result-msg" id="result-msg"></div>
+    <div class="result-sub" id="result-sub"></div>
+    <button class="restart-btn" onclick="restartQuiz()">Play Again ↺</button>
+    <div class="breakdown" id="breakdown"></div>
+  </div>
+</div>
+
+<script>
+const QUESTIONS = [
+
+  // ── SOME / ANY (3) ────────────────────────────────────────────────────────
+  {
+    emoji: "☕",
+    sentence: "Can I have ___ milk in my tea, please?",
+    hint: "She's making a polite request.",
+    options: ["some", "any", "much", "many"],
+    answer: "some",
+    rule: "Use some in positive sentences and polite requests.",
+    badge: "some / any", bc: "rgba(233,69,96,0.2)", bt: "#fd79a8"
+  },
+  {
+    emoji: "🍞",
+    sentence: "Is there ___ bread left? I'm starving!",
+    hint: "He's asking — he genuinely doesn't know.",
+    options: ["some", "any", "a few", "many"],
+    answer: "any",
+    rule: "Use any in questions and negative sentences.",
+    badge: "some / any", bc: "rgba(233,69,96,0.2)", bt: "#fd79a8"
+  },
+  {
+    emoji: "🐈",
+    sentence: "I don't have ___ cats — just one very loud dog.",
+    hint: "She's saying zero. The sentence is negative.",
+    options: ["some", "any", "many", "a little"],
+    answer: "any",
+    rule: "Use any in negative sentences.",
+    badge: "some / any", bc: "rgba(233,69,96,0.2)", bt: "#fd79a8"
+  },
+
+  // ── MUCH / MANY (3) ───────────────────────────────────────────────────────
+  {
+    emoji: "🧳",
+    sentence: "There isn't ___ space in this bag — you packed 14 jumpers.",
+    hint: "She can't fit anything else in. It's one continuous thing.",
+    options: ["many", "much", "a few", "any"],
+    answer: "much",
+    rule: "Use much with uncountable nouns (space, water, time…).",
+    badge: "much / many", bc: "rgba(52,152,219,0.2)", bt: "#74b9ff"
+  },
+  {
+    emoji: "🧑‍🎓",
+    sentence: "How ___ students passed the test?",
+    hint: "The teacher wants a number. You can count each one.",
+    options: ["much", "many", "any", "a little"],
+    answer: "many",
+    rule: "Use many with countable nouns (students, chairs, dogs…).",
+    badge: "much / many", bc: "rgba(52,152,219,0.2)", bt: "#74b9ff"
+  },
+  {
+    emoji: "⏱️",
+    sentence: "We don't have ___ time — the bus leaves in two minutes!",
+    hint: "They're in a hurry. Time flows — you can't hold one piece of it.",
+    options: ["many", "much", "a few", "enough"],
+    answer: "much",
+    answers: ["much", "enough"],
+    rule: "Both much and enough work in negative sentences. Much = uncountable; enough = countable and uncountable.",
+    badge: "much / many", bc: "rgba(52,152,219,0.2)", bt: "#74b9ff"
+  },
+
+  // ── A LOT OF / LOTS OF (2) ────────────────────────────────────────────────
+  {
+    emoji: "🎉",
+    sentence: "There were ___ people at the party — it was chaos!",
+    hint: "A big positive amount.",
+    options: ["much", "a little", "a lot of", "any"],
+    answer: "a lot of",
+    rule: "A lot of works with both countable and uncountable nouns.",
+    badge: "a lot of", bc: "rgba(0,208,132,0.2)", bt: "#55efc4"
+  },
+  {
+    emoji: "💧",
+    sentence: "She drinks ___ water — like, an alarming amount.",
+    hint: "A big positive amount.",
+    options: ["some", "lots of", "a few", "any"],
+    answer: "lots of",
+    rule: "Lots of works with both countable and uncountable nouns.",
+    badge: "lots of", bc: "rgba(0,208,132,0.2)", bt: "#55efc4"
+  },
+
+  // ── A FEW / A LITTLE (4) ──────────────────────────────────────────────────
+  {
+    emoji: "🪙",
+    sentence: "I've got ___ coins — enough for a chocolate bar.",
+    hint: "Not many, but some. You can pick them up one by one.",
+    options: ["a little", "a few", "much", "any"],
+    answer: "a few",
+    rule: "A few = a small number. Use with things you can count.",
+    badge: "a few / a little", bc: "rgba(255,211,42,0.2)", bt: "#ffeaa7"
+  },
+  {
+    emoji: "🧂",
+    sentence: "Add ___ salt to the soup — not too much!",
+    hint: "A small amount. Salt pours — you don't add it one piece at a time.",
+    options: ["a few", "many", "a little", "any"],
+    answer: "a little",
+    rule: "A little = a small amount. Use with things you can't count.",
+    badge: "a few / a little", bc: "rgba(255,211,42,0.2)", bt: "#ffeaa7"
+  },
+  {
+    emoji: "🇨🇿",
+    sentence: "I speak ___ Czech — just enough to order food.",
+    hint: "A small amount of a language. It flows — you can't count it in pieces.",
+    options: ["a few", "some", "much", "a little"],
+    answer: "a little",
+    rule: "A little = a small amount of something uncountable.",
+    badge: "a few / a little", bc: "rgba(255,211,42,0.2)", bt: "#ffeaa7"
+  },
+  {
+    emoji: "📖",
+    sentence: "Only ___ students had read the book before the lesson.",
+    hint: "A small number. Each student is a separate person.",
+    options: ["a little", "much", "a few", "any"],
+    answer: "a few",
+    rule: "A few = a small number of countable things.",
+    badge: "a few / a little", bc: "rgba(255,211,42,0.2)", bt: "#ffeaa7"
+  },
+
+  // ── TOO MUCH / TOO MANY (4) ───────────────────────────────────────────────
+  {
+    emoji: "🍰",
+    sentence: "You put ___ sugar in this cake. It's basically a sweet.",
+    hint: "Way more than needed. Sugar pours — it doesn't come in pieces.",
+    options: ["too many", "too much", "some", "enough"],
+    answer: "too much",
+    rule: "Too much = more than is good. Use with uncountable nouns.",
+    badge: "too much / too many", bc: "rgba(156,89,209,0.2)", bt: "#a29bfe"
+  },
+  {
+    emoji: "🚗",
+    sentence: "There are ___ cars in Prague. It takes an hour to cross town.",
+    hint: "Way more than needed. Each car is a separate object.",
+    options: ["too much", "too many", "a little", "many"],
+    answer: "too many",
+    rule: "Too many = more than is good. Use with countable nouns.",
+    badge: "too much / too many", bc: "rgba(156,89,209,0.2)", bt: "#a29bfe"
+  },
+  {
+    emoji: "🤢",
+    // FIXED: was "pizza" (ambiguous mass/count) → "rice" (unambiguously uncountable)
+    sentence: "I ate ___ rice and now I deeply regret it.",
+    hint: "Way more than was wise. Rice is a substance — it goes on forever.",
+    options: ["too many", "too much", "a lot of", "a little"],
+    answer: "too much",
+    rule: "Too much = more than is good. Use with uncountable nouns.",
+    badge: "too much / too many", bc: "rgba(156,89,209,0.2)", bt: "#a29bfe"
+  },
+  {
+    emoji: "📱",
+    sentence: "He gets ___ notifications. His phone never stops buzzing.",
+    hint: "Way more than necessary. Each buzz is a separate event.",
+    options: ["too much", "too many", "enough", "a few"],
+    answer: "too many",
+    rule: "Too many = more than is good. Use with countable nouns.",
+    badge: "too much / too many", bc: "rgba(156,89,209,0.2)", bt: "#a29bfe"
+  },
+
+  // ── ENOUGH (2) ────────────────────────────────────────────────────────────
+  {
+    emoji: "🪑",
+    sentence: "Do we have ___ chairs for everyone? There are 30 guests.",
+    hint: "The right amount — not too many, not too few.",
+    options: ["much", "many", "enough", "any"],
+    answer: "enough",
+    rule: "Enough = the right amount. Works with countable and uncountable.",
+    badge: "enough", bc: "rgba(0,210,211,0.2)", bt: "#81ecec"
+  },
+  {
+    emoji: "💸",
+    sentence: "I don't have ___ money to buy those trainers.",
+    hint: "He wants them but can't afford them. The amount falls short.",
+    options: ["some", "many", "much", "enough"],
+    answer: "enough",
+    rule: "Enough = the right amount. It's not about how much money — it's about whether it's sufficient.",
+    badge: "enough", bc: "rgba(0,210,211,0.2)", bt: "#81ecec"
+  },
+
+  // ── MIXED CHALLENGE (6) ───────────────────────────────────────────────────
+  // EXPANDED from 2 → 6; no hints label countable/uncountable
+  {
+    emoji: "🧠",
+    sentence: "Is there ___ information about this on the website?",
+    hint: "He's asking — he doesn't know yet.",
+    options: ["many", "a few", "any", "some"],
+    answer: "any",
+    rule: "Use any in questions. Information is uncountable.",
+    badge: "Mixed 🌶️", bc: "rgba(255,107,53,0.2)", bt: "#fab1a0"
+  },
+  {
+    emoji: "😴",
+    sentence: "She only had ___ sleep last night — maybe two hours.",
+    hint: "A small amount of something that flows — you don't sleep in separate chunks.",
+    options: ["a few", "some", "much", "a little"],
+    answer: "a little",
+    rule: "A little = a small amount. Sleep is uncountable.",
+    badge: "Mixed 🌶️", bc: "rgba(255,107,53,0.2)", bt: "#fab1a0"
+  },
+  {
+    emoji: "🐶",
+    sentence: "There are ___ dogs in this park. My socks are covered in mud.",
+    hint: "Way more dogs than the park was designed for. Each one is separate.",
+    options: ["too much", "a little", "too many", "enough"],
+    answer: "too many",
+    rule: "Too many = more than is good. Use with countable nouns.",
+    badge: "Mixed 🌶️", bc: "rgba(255,107,53,0.2)", bt: "#fab1a0"
+  },
+  {
+    emoji: "☀️",
+    sentence: "I only need ___ sunshine to feel happy — even one ray works.",
+    hint: "Not much at all. A tiny positive amount of something you can't hold.",
+    options: ["some", "a few", "too many", "a little"],
+    answer: "a little",
+    rule: "A little = a small amount. Sunshine is uncountable.",
+    badge: "Mixed 🌶️", bc: "rgba(255,107,53,0.2)", bt: "#fab1a0"
+  },
+  {
+    emoji: "🎒",
+    sentence: "Only ___ people brought a pen. The rest just smiled.",
+    hint: "A small number showed up prepared. You could count them on one hand.",
+    options: ["a little", "some", "a few", "much"],
+    answer: "a few",
+    rule: "A few = a small number. Use with things you can count.",
+    badge: "Mixed 🌶️", bc: "rgba(255,107,53,0.2)", bt: "#fab1a0"
+  },
+  {
+    emoji: "🔋",
+    sentence: "Is there ___ charge left on your phone? Mine is dead.",
+    hint: "She's asking about something she can't see the amount of.",
+    options: ["many", "some", "any", "too many"],
+    answer: "any",
+    rule: "Use any in questions. Charge is uncountable.",
+    badge: "Mixed 🌶️", bc: "rgba(255,107,53,0.2)", bt: "#fab1a0"
+  },
+];
+
+// ── STATE ──────────────────────────────────────────────────────────────────
+let questions = [], current = 0, score = 0, streak = 0, bestStreak = 0;
+let answered = [], userAnswers = [];
+
+// ── CONFETTI ───────────────────────────────────────────────────────────────
+const canvas = document.getElementById('confetti-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+
+function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+function launchConfetti(x, y, count = 24) {
+  const colors = ['#e94560','#ffd32a','#00d084','#00d2d3','#ff9f43','#a29bfe','#fd79a8'];
+  for (let i = 0; i < count; i++) {
+    particles.push({
+      x, y,
+      vx: (Math.random() - 0.5) * 12,
+      vy: -Math.random() * 13 - 3,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      size: Math.random() * 8 + 4,
+      angle: Math.random() * Math.PI * 2,
+      spin: (Math.random() - 0.5) * 0.35,
+      life: 1
+    });
+  }
+  requestAnimationFrame(animateConfetti);
+}
+
+function animateConfetti() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles = particles.filter(p => p.life > 0);
+  particles.forEach(p => {
+    p.x += p.vx; p.y += p.vy; p.vy += 0.45;
+    p.vx *= 0.98; p.angle += p.spin; p.life -= 0.016;
+    ctx.save();
+    ctx.translate(p.x, p.y); ctx.rotate(p.angle);
+    ctx.globalAlpha = p.life; ctx.fillStyle = p.color;
+    ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size * 0.6);
+    ctx.restore();
+  });
+  if (particles.length > 0) requestAnimationFrame(animateConfetti);
+}
+
+function launchFullConfetti() {
+  for (let i = 0; i < 6; i++) {
+    setTimeout(() => launchConfetti(Math.random() * canvas.width, canvas.height * 0.25, 30), i * 180);
+  }
+}
+
+// ── STREAK BANNER ─────────────────────────────────────────────────────────
+const STREAK_MSGS = { 3:'🔥 3 in a row!', 5:'⚡ 5 in a row!!', 7:'🚀 7 in a row!!!', 10:'👑 10 in a row!!!', 15:'🌟 UNSTOPPABLE!!!' };
+function showStreakBanner(n) {
+  if (!STREAK_MSGS[n]) return;
+  const b = document.getElementById('streak-banner');
+  b.textContent = STREAK_MSGS[n];
+  b.classList.add('show');
+  setTimeout(() => b.classList.remove('show'), 1800);
+}
+
+// ── REF TOGGLE ────────────────────────────────────────────────────────────
+function toggleRef() {
+  document.getElementById('ref-toggle').classList.toggle('open');
+  document.getElementById('ref-body').classList.toggle('open');
+}
+
+// ── UTILS ─────────────────────────────────────────────────────────────────
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+// ── START ─────────────────────────────────────────────────────────────────
+function startQuiz() {
+  questions = shuffle([...QUESTIONS]);
+  current = 0; score = 0; streak = 0; bestStreak = 0;
+  answered = new Array(questions.length).fill(false);
+  userAnswers = new Array(questions.length).fill(null);
+  document.getElementById('quiz-screen').style.display = 'flex';
+  document.getElementById('results-screen').style.display = 'none';
+  document.getElementById('score-total').textContent = `/${questions.length}`;
+  updateStats();
+  renderQuestion();
+}
+
+function updateStats() {
+  const total = questions.length;
+  const answeredCount = answered.filter(Boolean).length;
+  const pct = answeredCount > 0 ? Math.round((score / answeredCount) * 100) : 100;
+
+  document.getElementById('progress-fill').style.width = `${(current / total) * 100}%`;
+  document.getElementById('progress-label').textContent = `${current + 1} / ${total}`;
+  document.getElementById('score-display').textContent = score;
+  document.getElementById('streak-display').textContent = streak;
+
+  // Only colour after 5 answered — avoids early noise from tiny sample
+  const fill = document.getElementById('progress-fill');
+  if (answeredCount < 5) {
+    fill.style.background = 'linear-gradient(90deg, #e94560, #ff6b35)';
+  } else if (pct >= 80) {
+    fill.style.background = 'linear-gradient(90deg, #00d084, #00b894)';
+  } else if (pct >= 55) {
+    fill.style.background = 'linear-gradient(90deg, #ffd32a, #ff9f43)';
+  } else {
+    fill.style.background = 'linear-gradient(90deg, #e94560, #ff6b35)';
+  }
+}
+
+// ── EMOJI ANIMATION VARIETY ───────────────────────────────────────────────
+const EMOJI_ANIMS = ['wiggle', 'bounce-emoji', 'spin-emoji', 'pop-emoji'];
+const EMOJI_ANIM_CSS = `
+@keyframes bounce-emoji {
+  0%,100% { transform: translateY(0); }
+  40% { transform: translateY(-12px); }
+  60% { transform: translateY(-6px); }
+}
+@keyframes spin-emoji {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.2); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+@keyframes pop-emoji {
+  0% { transform: scale(0.5); opacity:0; }
+  60% { transform: scale(1.3); }
+  100% { transform: scale(1); opacity:1; }
+}`;
+// Inject extra keyframes once
+const emojiStyle = document.createElement('style');
+emojiStyle.textContent = EMOJI_ANIM_CSS;
+document.head.appendChild(emojiStyle);
+
+// ── RENDER ────────────────────────────────────────────────────────────────
+function renderQuestion() {
+  const q = questions[current];
+
+  document.getElementById('card-glow').style.background = q.bt;
+
+  const badge = document.getElementById('q-badge');
+  badge.textContent = q.badge;
+  badge.style.background = q.bc;
+  badge.style.color = q.bt;
+  badge.style.borderColor = q.bt;
+
+  // Random emoji animation
+  const emojiEl = document.getElementById('emoji-scene');
+  const anim = EMOJI_ANIMS[Math.floor(Math.random() * EMOJI_ANIMS.length)];
+  emojiEl.style.animation = 'none';
+  requestAnimationFrame(() => {
+    emojiEl.textContent = q.emoji;
+    emojiEl.style.animation = `${anim} 0.8s ease 0.1s both`;
+  });
+
+  document.getElementById('sentence-display').innerHTML = q.sentence.replace('___', '<span class="blank">___</span>');
+  document.getElementById('hint-display').textContent = q.hint;
+
+  const opts = shuffle([...q.options]);
+  const container = document.getElementById('options-container');
+  container.innerHTML = '';
+  opts.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'opt-btn';
+    btn.textContent = opt;
+    btn.onclick = () => selectAnswer(opt, btn, q);
+    container.appendChild(btn);
+  });
+
+  document.getElementById('feedback').className = 'feedback';
+  const nextBtn = document.getElementById('next-btn');
+  nextBtn.className = 'next-btn';
+  nextBtn.textContent = 'Next →';
+  const pip = document.createElement('span');
+  pip.className = 'pip-track';
+  pip.id = 'pip-track';
+  nextBtn.appendChild(pip);
+}
+
+// ── AUTO-ADVANCE ──────────────────────────────────────────────────────────
+let autoAdvanceTimer = null;
+
+function clearAutoAdvance() {
+  if (autoAdvanceTimer) { clearTimeout(autoAdvanceTimer); autoAdvanceTimer = null; }
+}
+
+// ── SELECT ────────────────────────────────────────────────────────────────
+const CORRECT_MSGS = ['Nailed it! 🎯','Correct! ✓','Exactly right!','Yes!','Brilliant! 🌟','Spot on!','Perfect!'];
+
+function validAnswers(q) {
+  return q.answers || [q.answer];
+}
+
+function selectAnswer(chosen, btn, q) {
+  if (answered[current]) return;
+  clearAutoAdvance();
+  answered[current] = true;
+  userAnswers[current] = chosen;
+
+  const accepted = validAnswers(q);
+  const isCorrect = accepted.includes(chosen);
+
+  if (isCorrect) {
+    score++;
+    streak++;
+    if (streak > bestStreak) bestStreak = streak;
+    showStreakBanner(streak);
+    const r = btn.getBoundingClientRect();
+    launchConfetti(r.left + r.width / 2, r.top + r.height / 2, 22);
+  } else {
+    streak = 0;
+  }
+
+  document.querySelectorAll('.opt-btn').forEach(b => {
+    b.disabled = true;
+    if (accepted.includes(b.textContent)) {
+      b.classList.add(isCorrect && b.textContent === chosen ? 'correct' : 'reveal-correct');
+    }
+  });
+  if (!isCorrect) btn.classList.add('wrong');
+
+  const fb = document.getElementById('feedback');
+  document.getElementById('feedback-icon').textContent = isCorrect ? '✅' : '❌';
+
+  if (isCorrect) {
+    document.getElementById('feedback-main').textContent =
+      CORRECT_MSGS[Math.floor(Math.random() * CORRECT_MSGS.length)];
+  } else {
+    const acceptedStr = accepted.join(' or ');
+    document.getElementById('feedback-main').textContent = `The answer is: ${acceptedStr}`;
+  }
+
+  document.getElementById('feedback-rule').textContent = q.rule;
+  fb.className = `feedback show ${isCorrect ? 'correct-fb' : 'wrong-fb'}`;
+
+  updateStats();
+
+  // Show next button
+  const nextBtn = document.getElementById('next-btn');
+  nextBtn.className = 'next-btn show';
+
+  if (isCorrect) {
+    // Auto-advance after 1.5s with pip countdown
+    nextBtn.classList.add('auto-counting');
+    autoAdvanceTimer = setTimeout(() => {
+      nextBtn.classList.remove('auto-counting');
+      nextQuestion();
+    }, 2000);
+  }
+  // Wrong answers: manual tap only — student needs to read the rule
+}
+
+// ── NEXT ──────────────────────────────────────────────────────────────────
+function nextQuestion() {
+  clearAutoAdvance();
+  current++;
+  if (current >= questions.length) {
+    showResults();
+  } else {
+    const card = document.getElementById('question-card');
+    card.style.animation = 'none';
+    requestAnimationFrame(() => {
+      card.style.animation = 'card-in 0.35s cubic-bezier(0.34,1.4,0.64,1) both';
+      renderQuestion();
+      updateStats();
+    });
+  }
+}
+
+// ── RESULTS ───────────────────────────────────────────────────────────────
+function showResults() {
+  document.getElementById('quiz-screen').style.display = 'none';
+  document.getElementById('results-screen').style.display = 'flex';
+
+  const total = questions.length;
+  const pct = Math.round((score / total) * 100);
+
+  // Animated score counter
+  const bigScore = document.getElementById('big-score');
+  bigScore.innerHTML = `0<span>/${total}</span>`;
+  let counted = 0;
+  const countInterval = setInterval(() => {
+    counted++;
+    bigScore.innerHTML = `${counted}<span>/${total}</span>`;
+    if (counted >= score) clearInterval(countInterval);
+  }, 1000 / (score || 1));
+
+  let emoji, msg, sub;
+  if (pct === 100) {
+    emoji = '🏆'; msg = 'Perfect score!';
+    sub = `Best streak: ${bestStreak}. Absolute legend.`;
+    setTimeout(launchFullConfetti, 600);
+  } else if (pct >= 80) {
+    emoji = '🎉'; msg = 'Really strong work!';
+    sub = `Best streak: ${bestStreak}. One more run for 100%?`;
+  } else if (pct >= 60) {
+    emoji = '💪'; msg = 'Good effort!';
+    sub = `Best streak: ${bestStreak}. Check the ones below and try again.`;
+  } else {
+    emoji = '📖'; msg = 'Keep practising!';
+    sub = 'Open the Quick Reference and look carefully at the ones you missed.';
+  }
+
+  document.getElementById('result-emoji').textContent = emoji;
+  document.getElementById('result-msg').textContent = msg;
+  document.getElementById('result-sub').textContent = sub;
+
+  // ── GROUPED BREAKDOWN ──
+  const bd = document.getElementById('breakdown');
+  bd.innerHTML = '<div class="breakdown-title">Your answers</div>';
+
+  // Group questions by badge
+  const groups = {};
+  questions.forEach((q, i) => {
+    const key = q.badge;
+    if (!groups[key]) groups[key] = { bc: q.bc, bt: q.bt, items: [] };
+    groups[key].items.push({ q, i });
+  });
+
+  Object.entries(groups).forEach(([groupName, group]) => {
+    const misses = group.items.filter(({ q, i }) => {
+      const accepted = q.answers || [q.answer];
+      return !accepted.includes(userAnswers[i]);
+    }).length;
+
+    const groupEl = document.createElement('div');
+    groupEl.className = 'bd-group';
+
+    const header = document.createElement('div');
+    header.className = 'bd-group-header';
+    header.style.background = group.bc;
+    header.style.color = group.bt;
+    header.innerHTML = `<span>${groupName}</span><span class="bd-group-miss">${misses === 0 ? '✅ all correct' : `❌ ${misses} missed`}</span>`;
+    groupEl.appendChild(header);
+
+    group.items.forEach(({ q, i }) => {
+      const accepted = q.answers || [q.answer];
+      const correct = accepted.includes(userAnswers[i]);
+      const item = document.createElement('div');
+      item.className = 'breakdown-item';
+
+      const displayAnswer = accepted.length > 1 ? accepted.join(' / ') : q.answer;
+      const filled = q.sentence.replace('___', `<strong>${displayAnswer}</strong>`);
+
+      let wrongNote = '';
+      if (!correct && userAnswers[i]) {
+        wrongNote = `<div class="bd-wrong-note">You chose: <span class="bd-wrong-word">${userAnswers[i]}</span></div>`;
+      } else if (correct && accepted.length > 1 && userAnswers[i] !== q.answer) {
+        wrongNote = `<div class="bd-wrong-note" style="color:var(--green);opacity:0.8">✓ You chose: ${userAnswers[i]}</div>`;
+      }
+
+      item.innerHTML = `<div class="bd-sentence">${filled}${wrongNote}</div><div class="bd-icon">${correct ? '✅' : '❌'}</div>`;
+      groupEl.appendChild(item);
+    });
+
+    bd.appendChild(groupEl);
+  });
+}
+
+// ── RESTART ───────────────────────────────────────────────────────────────
+function restartQuiz() {
+  clearAutoAdvance();
+  startQuiz();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+startQuiz();
+</script>
+</body>
+</html>
